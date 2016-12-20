@@ -49,7 +49,8 @@ module Yoxruby
                                          api_token: @api_token,
                                          link: options[:link],
                                          location: options[:location],
-                                         text: options[:text]} )
+                                         text: options[:text]},
+                                         response_pair: options[:response_pair])
             res.body
         end
     end
