@@ -35,6 +35,13 @@ module Yoxruby
             res.body
         end
 
+        def contacts
+            url = API_BASE_URL + "/contacts/?access_token=#{@access_token}"
+            res = @httpclient.get(url)
+            res.body
+        end
+
+
         private
         def just_yo(endpoint, **options)
             url = API_BASE_URL + endpoint
