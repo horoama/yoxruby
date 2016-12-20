@@ -28,6 +28,11 @@ module Yoxruby
             res = @httpclient.get(url)
             res.body
         end
+
+        def me
+            url = API_BASE_URL + "/me/?access_token=#{@access_token}"
+            res = @httpclient.get(url)
+            res.body
         end
 
         private
