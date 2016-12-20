@@ -26,6 +26,8 @@ module Yoxruby
         def unread
             url = API_BASE_URL + "/yos/?access_token=#{@access_token}"
             res = @httpclient.get(url)
+            res.body
+        end
         end
 
         private
@@ -36,6 +38,7 @@ module Yoxruby
                                          link: options[:link],
                                          location: options[:location],
                                          text: options[:text]} )
+            res.body
         end
     end
 end
