@@ -26,14 +26,33 @@ module Yoxruby
         def unread
             url = API_BASE_URL + "/yos/?access_token=#{@access_token}"
             res = @httpclient.get(url)
-            res.body
+            JSON.parse res.body
         end
 
         def me
             url = API_BASE_URL + "/me/?access_token=#{@access_token}"
             res = @httpclient.get(url)
-            res.body
+            JSON.parse res.body
         end
+
+        def contacts
+            url = API_BASE_URL + "/contacts/?access_token=#{@access_token}"
+            res = @httpclient.get(url)
+            JSON.parse res.body
+        end
+
+        def add_contacts(username)
+            url = API_BASE_URL + "/contacts/?access_token=#{@access_token}"
+            res = @httpclient.post(url, {username: username})
+            JSON.parse res.body
+        end
+
+        def subscribers
+            url = API_BASE_URL + "/subscribers_count/?api_token=#{@api_token}"
+            res = @httpclient.get(url)
+            JSON.parse res.body
+        end
+
 
         private
         def just_yo(endpoint, **options)
@@ -42,8 +61,9 @@ module Yoxruby
                                          api_token: @api_token,
                                          link: options[:link],
                                          location: options[:location],
-                                         text: options[:text]} )
-            res.body
+                                         text: options[:text]},
+                                         response_pair: options[:response_pair])
+            JSON.parse res.body
         end
     end
 end
