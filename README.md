@@ -19,7 +19,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### send yo
+```
+require "yoxruby"
+
+client = Yoxruby::Client(API_TOKEN,ACCESS_TOKEN) #API_TOKEN is necessary
+
+client.yo(username)
+```
+
+### get unread yo
+```
+require "yoxruby"
+
+client = Yoxruby::Client(API_TOKEN,ACCESS_TOKEN) #ACCESS_TOKEN is necessary
+
+client.unread
+```
 
 ## Contributing
 
