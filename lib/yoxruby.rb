@@ -41,6 +41,18 @@ module Yoxruby
             res.body
         end
 
+        def add_contacts(username)
+            url = API_BASE_URL + "/contacts/?access_token=#{@access_token}"
+            res = @httpclient.post(url, {username: username})
+            JSON.parse res.body
+        end
+
+        def subscribers
+            url = API_BASE_URL + "/subscribers_count/?api_token=#{@api_token}"
+            res = @httpclient.get(url)
+            JSON.parse res.body
+        end
+
 
         private
         def just_yo(endpoint, **options)
