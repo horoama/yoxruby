@@ -19,6 +19,13 @@ Or install it yourself as:
 
 ## Usage
 
+### get API_TOKEN & ACCESS_TOKEN
+
+API_TOKEN: https://dashboard.justyo.co/
+click "View API key"
+
+ACCESS_TOKEN: https://accesstoken.justyo.co/
+
 ### send yo
 ```
 require "yoxruby"
