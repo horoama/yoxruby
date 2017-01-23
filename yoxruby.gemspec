@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["horoama929@gmail.com"]
 
   spec.summary       = "Simple Yo wrapper"
-  spec.description   = "Watanabe Yo x Kurosawa Ruby"
+  spec.description   = "Simple Yo wrapper.The origin of this gem's name is Watanabe Yo x Kurosawa Ruby"
   spec.homepage      = "https://github.com/horoama/yoxruby"
   spec.license       = "MIT"
 
