@@ -4,7 +4,7 @@ require "json"
 
 module Yoxruby
     class Client
-        API_BASE_URL = "http://api.justyo.co"
+        API_BASE_URL = "https://api.justyo.co"
         def initialize(api_token=nil, access_token=nil)
             if api_token != nil
                 @api_token = api_token
