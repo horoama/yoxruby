@@ -15,6 +15,18 @@ module Yoxruby
             @httpclient = HTTPClient.new
         end
 
+        def set_api_token(username, password)
+            url = API_BASE_URL + "/rpc/login"
+            res = @httpclient.post(url, {username: username, password: password})
+            res = JSON.parse(res.body)
+            token = ""
+            if res.has_key?('api_token')
+                token = res['api_token']
+            end
+            print url
+            @api_token = token
+        end
+
         def yoall(**options)
             just_yo("/yoall/", options)
         end
