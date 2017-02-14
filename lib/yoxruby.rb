@@ -4,7 +4,7 @@ require "json"
 
 module Yoxruby
     class Client
-        attr_writer :access_token
+        attr_writer :api_token, :access_token
 
         API_BASE_URL = "https://api.justyo.co"
 
@@ -26,7 +26,6 @@ module Yoxruby
             if res.has_key?('api_token')
                 token = res['api_token']
             end
-            print url
             @api_token = token
         end
 
