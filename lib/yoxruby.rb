@@ -3,6 +3,8 @@ require "httpclient"
 require "json"
 
 module Yoxruby
+    class ConnectionError < StandardError; end
+    class ClientError < StandardError; end
     class Client
         attr_writer :api_token, :access_token
 
