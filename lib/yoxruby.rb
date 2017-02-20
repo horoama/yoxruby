@@ -22,64 +22,70 @@ module Yoxruby
 
         def set_api_token(username, password)
             url = API_BASE_URL + "/rpc/login"
-            res = @httpclient.post(url, {username: username, password: password})
-            res = JSON.parse(res.body)
-            token = ""
-            if res.has_key?('api_token')
-                token = res['api_token']
-            end
-            @api_token = token
+            res = http_wrapper { @httpclient.post(url, {username: username, password: password}) }
+            @api_token = res['api_token']
+            res
         end
 
         def yoall(**options)
-            just_yo("/yoall/", options)
+            res = just_yo("/yoall/", options)
         end
 
         def yo(**options)
-            just_yo("/yo/", options)
+            res = just_yo("/yo/", options)
         end
 
         def unread
             url = API_BASE_URL + "/yos/?access_token=#{@access_token}"
-            res = @httpclient.get(url)
-            JSON.parse res.body
+            res = http_wrapper {@httpclient.get(url)}
         end
 
         def me
             url = API_BASE_URL + "/me/?access_token=#{@access_token}"
-            res = @httpclient.get(url)
-            JSON.parse res.body
+            res = http_wrapper {@httpclient.get(url)}
         end
 
         def contacts
             url = API_BASE_URL + "/contacts/?access_token=#{@access_token}"
-            res = @httpclient.get(url)
-            JSON.parse res.body
+            res = http_wrapper {@httpclient.get(url)}
         end
 
         def add_contacts(username)
             url = API_BASE_URL + "/contacts/?access_token=#{@access_token}"
-            res = @httpclient.post(url, {username: username})
-            JSON.parse res.body
+            res = http_wrapper {@httpclient.post(url, {username: username})}
         end
 
         def subscribers
             url = API_BASE_URL + "/subscribers_count/?api_token=#{@api_token}"
-            res = @httpclient.get(url)
-            JSON.parse res.body
+            res = http_wrapper {@httpclient.get(url)}
         end
 
 
         private
+        def http_wrapper(&block)
+            begin
+                res = block.call
+                res = JSON.parse res.body
+                raise ClientError.new(res['error']) if res.has_key? "error"
+            rescue HTTPClient::TimeoutError => e
+                raise ConnectionError.new(e.message)
+            rescue HTTPClient::BadResponseError => e
+                raise ConnectionError.new(e.message)
+            rescue HTTPClient::ConfigurationError => e
+                raise ClientError.new(e.message)
+            end
+            res
+        end
         def just_yo(endpoint, **options)
             url = API_BASE_URL + endpoint
-            res = @httpclient.post(url, {username: options[:username],
-                                         api_token: @api_token,
-                                         link: options[:link],
-                                         location: options[:location],
-                                         text: options[:text]},
-                                         response_pair: options[:response_pair])
-            JSON.parse res.body
+            res = http_wrapper {
+                @httpclient.post(url, { username: options[:username],
+                                        api_token: @api_token,
+                                        link: options[:link],
+                                        location: options[:location],
+                                        text: options[:text]},
+                                        response_pair: options[:response_pair])
+            }
         end
     end
 end
